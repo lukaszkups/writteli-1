@@ -322,13 +322,14 @@ module.exports = {
       list.entries.map(entry => {
         promises.push(new Promise((resolve, reject) => {
           const contentTemplate = pug.compileFile(entry.template)
-          const parsedContentTemplate = contentTemplate({
+          let parsedContentTemplate = contentTemplate({
             title: entry.meta && entry.meta.title ? entry.meta.title : '',
             date: entry.meta && entry.meta.date ? entry.meta.date : '',
             tags: entry.meta && entry.meta.tags ? entry.meta.tags : '',
             description: entry.meta && entry.meta.description ? entry.meta.description : '',
             content: entry.content,
             meta: entry.meta || {},
+            parentList: CONFIG.includeListInArticles === true ? list.entries : null,
             ...contentTemplateOptions
           })
           fs.writeFile(path.normalize(entry.output), parsedContentTemplate, (err) => {
@@ -380,7 +381,7 @@ module.exports = {
   moveRootFolder: () => {
     return new Promise((resolve, reject) => {
       if (CONFIG.rootFolder) {
-        _helpers.copyFolderContents(`./output/${CONFIG.rootFolder}/`, `./output/`).then(() => {
+        _helpers.copyFolderRecursively(`./output/${CONFIG.rootFolder}/`, `./output/`).then(() => {
           resolve()
         })
       } else {

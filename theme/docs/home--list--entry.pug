@@ -1,0 +1,14 @@
+extends layout.pug
+
+block content
+  .docs-wrapper
+    aside.sidebar
+      ul.topic-list
+        each item, index in parentList.length ? parentList : ['No entries.']
+          li(class=meta.active == index ? 'active': '')
+            a(href=item.url) #{item.meta.title}
+    .main-container
+      include _header.pug
+      h1 #{title}
+      include _footer.pug
+

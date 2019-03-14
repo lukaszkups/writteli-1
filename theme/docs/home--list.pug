@@ -1,0 +1,13 @@
+extends layout.pug
+
+block content
+  .docs-wrapper
+    aside.sidebar
+      ul.topic-list
+        each item, index in list.length ? list : ['No entries.']
+          li
+            a(href=item.url) #{item.meta.title}
+    .main-container
+      include _header.pug
+      include _footer.pug
+

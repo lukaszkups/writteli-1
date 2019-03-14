@@ -1,0 +1,7 @@
+- var menu = [{id: 0, name: 'Home', url: 'https://writte.li'}, {id: 1, name: 'Author', url: 'https://lukaszkups.net'}, {id: 2, name: 'Support', url: 'https://ko-fi.com/lukaszkups'}]
+header
+  nav
+    ul
+      each item in menu
+        li
+          a(href=item.url) #{item.name}
